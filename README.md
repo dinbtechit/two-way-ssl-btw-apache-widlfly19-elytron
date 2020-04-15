@@ -37,6 +37,7 @@ Here is my Configuration:
 **Standalone-full.xml**
 ``` xml
 . . .
+<subsystem xmlns="urn:wildfly:elytron:8.0" final-providers="combined-providers" disallowed-providers="OracleUcrypto">
 <tls>
     <key-stores>
         <key-store name="MyKeyStore">
@@ -62,6 +63,8 @@ Here is my Configuration:
         <server-ssl-context name="MySSLContext" protocols="TLSv1.2" need-client-auth="true" key-manager="MyKeyManager" trust-manager="MyTrustManager"/>
     </server-ssl-contexts>
 </tls>
+</subsystem>
+ 
 . . .
 
 <subsystem xmlns="urn:jboss:domain:undertow:10.0" default-server="default-server" default-virtual-host="default-host" default-servlet-container="default" default-security-domain="other" statistics-enabled="${wildfly.under
@@ -72,6 +75,7 @@ tow.statistics-enabled:${wildfly.statistics-enabled:false}}">
  <https-listener name="https" socket-binding="https" ssl-context="MySSLContext" enable-http2="true"/>
 
 . . .
+</subsystem>
 
 ```
 
