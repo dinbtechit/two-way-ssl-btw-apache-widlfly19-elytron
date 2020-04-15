@@ -82,13 +82,25 @@ tow.statistics-enabled:${wildfly.statistics-enabled:false}}">
 **Apache Configuration:**
 
 ``` apacheconf
+ProxyRequests Off
+ProxyPreserveHost On
+ProxyTimeout 600
+
 SSLProxyEngine On
 SSLProxyVerify On
+
+# SSLProxyCACertificateFile - can be either the cert of the JBoss server (when using self-signed certs) or the CA that signed the JBoss cert. 
+# If you using actual CA signed cert you don't need to specify SSLProxyCACertificateFile.
 SSLProxyCACertificateFile certs/jboss_cert.pem
+
+# SSLProxyMachineCertificateFile - contains the public/private key pair (PEM formatted, concatenated). 
+# This is what tells wildfly whether the request is coming a trusted apache. 
+# Once again, don't have to specify this if you have an CA signed Cert. Only for Self Generated Certs.
 SSLProxyMachineCertificateFile certs/apache_proxy.pem
-ProxyRequests Off
-ProxyPass / https://wildfly-localhost:8443/
+
+ProxyPass / https://wildfly-localhost:8443/  keepalive=On
 ProxyPassReverse / https://wildfly-localhost:8443/
+
 ```
 
 # Script to Generate Self Signed Certs:
