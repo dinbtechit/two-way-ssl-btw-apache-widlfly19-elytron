@@ -156,12 +156,14 @@ echo "  keystoreFile=\"\${jboss.server.home.dir}/conf/$JBOSS_KEYSTORE\"
   clientAuth=\"true\""
 
 echo "Building public/private key to be used with Apache"
+
 #openssl req -x509 -subj $APACHE_CN -nodes -days 365 -newkey rsa:1024 -keyout apache_key.pem -out apache_cert.pem
+
 # Apache Private Key
 openssl genrsa -out apache_key.pem 1024
 # Apache Cert (Public)
 openssl req -new -key apache_key.pem -x509 -subj $APACHE_CN -out apache_cert.pem -days 365
-# Apache Intermediate or Combined
+# Apache Combined
 cat apache_key.pem apache_cert.pem > apache_proxy.pem
 
 import_cert $JBOSS_TRUSTSTORE "apache" "apache_cert.pem" $PASSWORD
