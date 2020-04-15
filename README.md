@@ -123,9 +123,9 @@ function import_cert
   keytool -import -noprompt -alias $ALIAS -keystore $KEY_FILE -storepass $PASS -file $IMPORT_FILE
 }
 
-PASSWORD="123456"
+PASSWORD="secret"
 APACHE_CN="/C=US/ST=AR/L=Somewhere/CN=apache"
-JBOSS_CN="CN=localhost"
+JBOSS_CN="CN=localhost"                                # This requires to localhost for self signed.
 JBOSS_KEYSTORE="jboss.keystore"
 JBOSS_CERT="jboss.cert"
 JBOSS_KEY_ALIAS="server"
