@@ -1,4 +1,3 @@
-After struggling a bit and couldn't find any documentation online to setup two-way or mutual SSL between Apache Httpd 2.4 and Wildfly 19, so decided to write my own hoping it will help someone. Essentially to securely transmit traffic between apache and wildfly over https. 
 
 > **Ref/Courtesy**: Jboss documentation - https://access.redhat.com/solutions/82363. This documentation heavily based on of that but modified it for Wildfly 19 & Elytron SSL Context.
 
