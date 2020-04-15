@@ -1,5 +1,5 @@
 
-> **Ref/Courtesy**: Jboss documentation - https://access.redhat.com/solutions/82363. This documentation heavily based on of that but modified it for Wildfly 19 & Elytron SSL Context.
+> **Ref/Courtesy**: Jboss documentation - https://access.redhat.com/solutions/82363. This documentation heavily based of that but modified it for Wildfly 19 & Elytron SSL Context.
 
 
 - Redhat or Centos 7 or 8
