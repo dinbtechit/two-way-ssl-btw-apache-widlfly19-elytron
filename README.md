@@ -1,5 +1,5 @@
 
-> **Ref/Courtesy**: Jboss documentation - https://access.redhat.com/solutions/82363. This documentation heavily based of that but modified it for Wildfly 19 & Elytron SSL Context.
+> **Ref/Courtesy**: Jboss documentation - https://access.redhat.com/solutions/82363. This documentation is heavily based of that but modified it for Wildfly 19 & Elytron SSL Context.
 
 
 - Redhat or Centos 7 or 8
@@ -157,15 +157,18 @@ echo "  keystoreFile=\"\${jboss.server.home.dir}/conf/$JBOSS_KEYSTORE\"
 
 echo "Building public/private key to be used with Apache"
 #openssl req -x509 -subj $APACHE_CN -nodes -days 365 -newkey rsa:1024 -keyout apache_key.pem -out apache_cert.pem
+# Apache Private Key
 openssl genrsa -out apache_key.pem 1024
+# Apache Cert (Public)
 openssl req -new -key apache_key.pem -x509 -subj $APACHE_CN -out apache_cert.pem -days 365
+# Apache Intermediate or Combined
 cat apache_key.pem apache_cert.pem > apache_proxy.pem
 
 import_cert $JBOSS_TRUSTSTORE "apache" "apache_cert.pem" $PASSWORD
 
 openssl x509 -in $JBOSS_CERT -inform DER -out jboss_cert.pem -outform PEM
 ```
-Result:
+**Result:**
 ```
 -rw-r--r-- 1 user root 1253 Apr 15 00:44 apache_cert.pem
 -rw------- 1 user root 1679 Apr 15 00:44 apache_key.pem
