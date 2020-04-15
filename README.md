@@ -8,7 +8,8 @@
 - Redhat or Centos 7 or 8
 - Wildfly 19
 - Apache Httpd 2.4 and Mod_Proxy over Https
-- OpenJdk 1.8.0_242
+- OpenJdk 1.8.0_242 (TLS v1.2). 
+  > If you need TLS v1.3 use JDK 11 or higher.
 
 
 ## Solution Steps
@@ -145,18 +146,13 @@ JBOSS_CERT="jboss.cert"
 JBOSS_KEY_ALIAS="server"
 JBOSS_TRUSTSTORE="jboss.truststore"
 
+echo "Creating public and private keys for Wildfly (Server-side)"
+
 create_keystore $JBOSS_KEYSTORE $JBOSS_KEY_ALIAS $JBOSS_CN $PASSWORD
 
 export_cert $JBOSS_KEYSTORE $JBOSS_KEY_ALIAS $JBOSS_CERT $PASSWORD
 
-echo "Add the following to server.xml"
-echo "  keystoreFile=\"\${jboss.server.home.dir}/conf/$JBOSS_KEYSTORE\"
-  keystorePass=\"$PASSWORD\"
-  truststoreFile=\"\${jboss.server.home.dir}/conf/$JBOSS_TRUSTSTORE\"
-  truststorePass=\"$PASSWORD\"
-  clientAuth=\"true\""
-
-echo "Building public/private key to be used with Apache"
+echo "Building public/private key to be used with Apache (Client-side)"
 
 #openssl req -x509 -subj $APACHE_CN -nodes -days 365 -newkey rsa:1024 -keyout apache_key.pem -out apache_cert.pem
 
@@ -181,3 +177,5 @@ openssl x509 -in $JBOSS_CERT -inform DER -out jboss_cert.pem -outform PEM
 -rw-r--r-- 1 user root 2421 Apr 15 00:44 jboss.keystore
 -rw-r--r-- 1 user root  948 Apr 15 00:44 jboss.truststore
 ```
+
+Please free to create tickets if you have any issues.
