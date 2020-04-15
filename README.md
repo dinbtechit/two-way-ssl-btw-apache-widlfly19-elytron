@@ -89,7 +89,8 @@ ProxyTimeout 600
 SSLProxyEngine On
 SSLProxyVerify On
 
-# SSLProxyCACertificateFile - can be either the cert of the JBoss server (when using self-signed certs) or the CA that signed the JBoss cert. 
+# SSLProxyCACertificateFile - can be either the cert of the JBoss server (when using self-signed certs) 
+# or the CA that signed the JBoss cert. 
 # If you using actual CA signed cert you don't need to specify SSLProxyCACertificateFile.
 SSLProxyCACertificateFile certs/jboss_cert.pem
 
