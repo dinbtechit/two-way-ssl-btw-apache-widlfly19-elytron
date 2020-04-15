@@ -90,3 +90,66 @@ ProxyRequests Off
 ProxyPass / https://wildfly-localhost:8443/
 ProxyPassReverse / https://wildfly-localhost:8443/
 ```
+
+# Script Generate Self Signed Certs:
+
+```
+#!/bin/sh
+
+function create_keystore
+{
+  KEY_FILE=$1
+  ALIAS=$2
+  DN=$3
+  PASS=$4
+  keytool -genkey -alias $ALIAS -keyalg RSA -keystore $KEY_FILE -validity 365 -storetype pkcs12 -storepass $PASS -keypass $PASS -dname $DN
+}
+
+function export_cert
+{
+  KEY_FILE=$1
+  ALIAS=$2
+  EXPORT_FILE=$3
+  PASS=$4
+  keytool -export -alias $ALIAS -keystore $KEY_FILE -storepass $PASS -file $EXPORT_FILE
+}
+
+function import_cert
+{
+  KEY_FILE=$1
+  ALIAS=$2
+  IMPORT_FILE=$3
+  PASS=$4
+  keytool -import -noprompt -alias $ALIAS -keystore $KEY_FILE -storepass $PASS -file $IMPORT_FILE
+}
+
+PASSWORD="123456"
+APACHE_CN="/C=US/ST=AR/L=Somewhere/CN=apache"
+JBOSS_CN="CN=localhost"
+JBOSS_KEYSTORE="jboss.keystore"
+JBOSS_CERT="jboss.cert"
+JBOSS_KEY_ALIAS="server"
+JBOSS_TRUSTSTORE="jboss.truststore"
+
+create_keystore $JBOSS_KEYSTORE $JBOSS_KEY_ALIAS $JBOSS_CN $PASSWORD
+
+export_cert $JBOSS_KEYSTORE $JBOSS_KEY_ALIAS $JBOSS_CERT $PASSWORD
+
+echo "Add the following to server.xml"
+echo "  keystoreFile=\"\${jboss.server.home.dir}/conf/$JBOSS_KEYSTORE\"
+  keystorePass=\"$PASSWORD\"
+  truststoreFile=\"\${jboss.server.home.dir}/conf/$JBOSS_TRUSTSTORE\"
+  truststorePass=\"$PASSWORD\"
+  clientAuth=\"true\""
+
+echo "Building public/private key to be used with Apache"
+#openssl req -x509 -subj $APACHE_CN -nodes -days 365 -newkey rsa:1024 -keyout apache_key.pem -out apache_cert.pem
+openssl genrsa -out apache_key.pem 1024
+openssl req -new -key apache_key.pem -x509 -subj $APACHE_CN -out apache_cert.pem -days 365
+cat apache_key.pem apache_cert.pem > apache_proxy.pem
+
+import_cert $JBOSS_TRUSTSTORE "apache" "apache_cert.pem" $PASSWORD
+
+openssl x509 -in $JBOSS_CERT -inform DER -out jboss_cert.pem -outform PEM
+```
+
