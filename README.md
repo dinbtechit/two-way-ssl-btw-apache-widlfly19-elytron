@@ -178,4 +178,4 @@ openssl x509 -in $JBOSS_CERT -inform DER -out jboss_cert.pem -outform PEM
 -rw-r--r-- 1 user root  948 Apr 15 00:44 jboss.truststore
 ```
 
-Please free to create tickets if you have any issues.
+Please feel free to create tickets if you have any issues.
