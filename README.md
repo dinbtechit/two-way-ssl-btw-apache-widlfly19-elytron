@@ -14,7 +14,7 @@ Here is my Configuration:
 
 **Wildfly 19** 
 
-CLI Commands
+**CLI Commands**
 ``` bash
 /subsystem=elytron/key-store=MyKeyStore:add(path=/etc/certs/selfSigned/jboss.keystore, credential-reference={clear-text=secret},type=JKS)
 
