@@ -77,7 +77,7 @@ tow.statistics-enabled:${wildfly.statistics-enabled:false}}">
 . . .
 </subsystem>
 
-```
+``` 
 
 **Apache Configuration:**
 
@@ -93,7 +93,7 @@ ProxyPassReverse / https://wildfly-localhost:8443/
 
 # Script Generate Self Signed Certs:
 
-```
+``` bash
 #!/bin/sh
 
 function create_keystore
