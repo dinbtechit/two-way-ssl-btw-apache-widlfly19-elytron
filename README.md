@@ -1,6 +1,9 @@
+# How do I setup 2 way SSL or mutual authentication between Apache and Wildfly using mod_proxy over https?
+
 
 > **Ref/Courtesy**: Jboss documentation - https://access.redhat.com/solutions/82363. This documentation is heavily based of that but modified it for Wildfly 19 & Elytron SSL Context.
 
+## Environment
 
 - Redhat or Centos 7 or 8
 - Wildfly 19
@@ -8,9 +11,7 @@
 - OpenJdk 1.8.0_242
 
 
-
-Here is my Configuration:
--------------------------
+## Solution Steps
 
 **Wildfly 19** 
 
