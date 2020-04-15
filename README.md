@@ -91,7 +91,7 @@ ProxyPass / https://wildfly-localhost:8443/
 ProxyPassReverse / https://wildfly-localhost:8443/
 ```
 
-# Script Generate Self Signed Certs:
+# Script to Generate Self Signed Certs:
 
 ``` bash
 #!/bin/sh
@@ -152,4 +152,13 @@ import_cert $JBOSS_TRUSTSTORE "apache" "apache_cert.pem" $PASSWORD
 
 openssl x509 -in $JBOSS_CERT -inform DER -out jboss_cert.pem -outform PEM
 ```
-
+Result:
+```
+-rw-r--r-- 1 user root 1253 Apr 15 00:44 apache_cert.pem
+-rw------- 1 user root 1679 Apr 15 00:44 apache_key.pem
+-rw-r--r-- 1 user root 2932 Apr 15 00:44 apache_proxy.pem
+-rw-r--r-- 1 user root  717 Apr 15 00:44 jboss.cert
+-rw-r--r-- 1 user root 1025 Apr 15 00:44 jboss_cert.pem
+-rw-r--r-- 1 user root 2421 Apr 15 00:44 jboss.keystore
+-rw-r--r-- 1 user root  948 Apr 15 00:44 jboss.truststore
+```
