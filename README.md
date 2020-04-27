@@ -90,6 +90,7 @@ ProxyTimeout 600
 
 SSLProxyEngine On
 SSLProxyVerify On
+SSLProxyProtocol all -SSLv2 -SSLv3 -TLSv1
 
 # SSLProxyCACertificateFile - can be either the cert of the JBoss server (when using self-signed certs) 
 # or the CA that signed the JBoss cert. 
@@ -139,8 +140,12 @@ function import_cert
 }
 
 PASSWORD="secret"
+# Specify your domain name CN=example.com.
 APACHE_CN="/C=US/ST=AR/L=Somewhere/CN=apache"
-JBOSS_CN="CN=localhost"                                # This requires to localhost for self signed.
+
+# Specify your domain name CN=example.com.
+JBOSS_CN="CN=localhost"     
+
 JBOSS_KEYSTORE="jboss.keystore"
 JBOSS_CERT="jboss.cert"
 JBOSS_KEY_ALIAS="server"
