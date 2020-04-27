@@ -90,7 +90,9 @@ ProxyTimeout 600
 
 SSLProxyEngine On
 SSLProxyVerify On
-SSLProxyProtocol all -SSLv2 -SSLv3 -TLSv1
+# For Self Signed Certs with CN name other than localhost
+SSLProxyCheckPeerCN off
+
 
 # SSLProxyCACertificateFile - can be either the cert of the JBoss server (when using self-signed certs) 
 # or the CA that signed the JBoss cert. 
